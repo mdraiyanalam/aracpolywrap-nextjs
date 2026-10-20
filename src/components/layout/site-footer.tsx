@@ -119,8 +119,12 @@ export function SiteFooter() {
       <div className="border-t border-white/10">
         <Container className="flex flex-col gap-2 py-6 sm:flex-row sm:items-center sm:justify-between">
           <p>
-            © <CopyrightYears since={company.copyrightStartYear} /> {company.name}. All rights
-            reserved.
+            ©{" "}
+            <CopyrightYears
+              since={company.copyrightStartYear}
+              renderedYear={new Date().getFullYear()}
+            />{" "}
+            {company.name}. All rights reserved.
           </p>
           <p>
             Designed by{" "}

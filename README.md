@@ -56,7 +56,7 @@ Docker image.
 | No phone number in the contact section      | ✅ Phone, e-mail, both offices and map (real number pending)   |
 | No back-to-top control                      | ✅ Accessible back-to-top button                               |
 | Footer social links looked poor             | ✅ Icon buttons with accessible names; dead Skype link removed |
-| "Clean the code"                            | ✅ TypeScript strict, ESLint, Prettier, 63 unit + 59 E2E tests |
+| "Clean the code"                            | ✅ TypeScript strict, ESLint, Prettier, 68 unit + 59 E2E tests |
 
 ## Features
 
@@ -75,23 +75,23 @@ Docker image.
   protection and no `X-Powered-By`.
 - **Content as data**: all copy lives in typed modules under `src/content/`, and a release gate
   (`npm run content:check`) blocks launch while placeholder content remains.
-- **Deployable anywhere**: Vercel, any Node.js 20.9+ host, or a non-root Docker image with a health
-  check.
+- **Deployable anywhere**: free on GitHub Pages (static export, auto-deployed by GitHub Actions),
+  Vercel, any Node.js 20.9+ host, or a non-root Docker image with a health check.
 
 ## Tech stack
 
-| Concern      | Choice                                                                       |
-| ------------ | ---------------------------------------------------------------------------- |
-| Framework    | [Next.js 16.4](https://nextjs.org) (App Router, Cache Components, Turbopack) |
-| UI           | React 19.3, [lucide-react](https://lucide.dev) icons                         |
-| Language     | TypeScript 5.9 (`strict`, `noUncheckedIndexedAccess`)                        |
-| Styling      | Tailwind CSS 4.3 with brand design tokens                                    |
-| Fonts        | Montserrat (display) and Inter (body) via `next/font`, self-hosted           |
-| Unit tests   | Vitest 5, Testing Library, jsdom                                             |
-| E2E and a11y | Playwright 1.64 (desktop and mobile Chromium), axe-core                      |
-| Code quality | ESLint 9 (flat config), Prettier 3, husky, lint-staged, commitlint           |
-| CI/CD        | GitHub Actions, Dependabot, Docker (standalone output)                       |
-| Runtime      | Node.js 22 LTS (minimum 20.9)                                                |
+| Concern      | Choice                                                             |
+| ------------ | ------------------------------------------------------------------ |
+| Framework    | [Next.js 16.4](https://nextjs.org) (App Router, Turbopack)         |
+| UI           | React 19.3, [lucide-react](https://lucide.dev) icons               |
+| Language     | TypeScript 5.9 (`strict`, `noUncheckedIndexedAccess`)              |
+| Styling      | Tailwind CSS 4.3 with brand design tokens                          |
+| Fonts        | Montserrat (display) and Inter (body) via `next/font`, self-hosted |
+| Unit tests   | Vitest 5, Testing Library, jsdom                                   |
+| E2E and a11y | Playwright 1.64 (desktop and mobile Chromium), axe-core            |
+| Code quality | ESLint 9 (flat config), Prettier 3, husky, lint-staged, commitlint |
+| CI/CD        | GitHub Actions, Dependabot, Docker (standalone output)             |
+| Runtime      | Node.js 22 LTS (minimum 20.9)                                      |
 
 ## Getting started
 
@@ -116,25 +116,28 @@ The first build downloads the Google Fonts once; after that they are served from
 
 ## Available scripts
 
-| Command                 | Description                                                       |
-| ----------------------- | ----------------------------------------------------------------- |
-| `npm run dev`           | Start the development server with hot reload (Turbopack)          |
-| `npm run build`         | Production build (+ copies static assets into `.next/standalone`) |
-| `npm start`             | Serve the production build (`node .next/standalone/server.js`)    |
-| `npm run lint`          | ESLint                                                            |
-| `npm run lint:fix`      | ESLint with auto-fix                                              |
-| `npm run format`        | Format all files with Prettier                                    |
-| `npm run format:check`  | Verify formatting                                                 |
-| `npm run typecheck`     | Generate route types and run `tsc --noEmit`                       |
-| `npm test`              | Unit tests (Vitest)                                               |
-| `npm run test:watch`    | Unit tests in watch mode                                          |
-| `npm run test:coverage` | Unit tests with coverage report in `coverage/`                    |
-| `npm run test:e2e`      | Build, then run Playwright E2E and accessibility tests            |
-| `npm run test:e2e:ui`   | Same, in Playwright's interactive UI                              |
-| `npm run validate`      | Lint, typecheck, format check and unit tests: run before every PR |
-| `npm run content:check` | Release gate: fails while `@placeholder` content remains          |
-| `npm run docker:build`  | Build the Docker image `aracpolywrap:local`                       |
-| `npm run docker:run`    | Run that image on port 3000                                       |
+| Command                   | Description                                                         |
+| ------------------------- | ------------------------------------------------------------------- |
+| `npm run dev`             | Start the development server with hot reload (Turbopack)            |
+| `npm run build`           | Production build (+ copies static assets into `.next/standalone`)   |
+| `npm start`               | Serve the production build (`node .next/standalone/server.js`)      |
+| `npm run build:static`    | Static export for GitHub Pages into `out/` (`-- --base-path /repo`) |
+| `npm run preview:static`  | Preview `out/` the way GitHub Pages serves it (port 4173)           |
+| `npm run lint`            | ESLint                                                              |
+| `npm run lint:fix`        | ESLint with auto-fix                                                |
+| `npm run format`          | Format all files with Prettier                                      |
+| `npm run format:check`    | Verify formatting                                                   |
+| `npm run typecheck`       | Generate route types and run `tsc --noEmit`                         |
+| `npm test`                | Unit tests (Vitest)                                                 |
+| `npm run test:watch`      | Unit tests in watch mode                                            |
+| `npm run test:coverage`   | Unit tests with coverage report in `coverage/`                      |
+| `npm run test:e2e`        | Build, then run Playwright E2E and accessibility tests              |
+| `npm run test:e2e:ui`     | Same, in Playwright's interactive UI                                |
+| `npm run test:e2e:static` | Static export, then the E2E suite against it                        |
+| `npm run validate`        | Lint, typecheck, format check and unit tests: run before every PR   |
+| `npm run content:check`   | Release gate: fails while `@placeholder` content remains            |
+| `npm run docker:build`    | Build the Docker image `aracpolywrap:local`                         |
+| `npm run docker:run`      | Run that image on port 3000                                         |
 
 ## Project structure
 
@@ -203,8 +206,9 @@ A step-by-step guide for non-developers is in
 ## Testing and quality
 
 ```bash
-npm run validate      # lint + typecheck + format + 63 unit tests
+npm run validate      # lint + typecheck + format + 68 unit tests
 npm run test:e2e      # production build + 59 Playwright checks (desktop and mobile)
+npm run test:e2e:static   # same suite against the GitHub Pages static export
 ```
 
 | Layer            | Tooling                   | What it covers                                                      |
@@ -228,8 +232,18 @@ Details: [testing guide](docs/guides/testing.md) and [quality report](docs/quali
 
 ## Deployment
 
-The app builds to static pages served by a small Node.js server
-([`output: "standalone"`](https://nextjs.org/docs/app/api-reference/config/next-config-js/output)).
+The app has two build targets:
+
+- **Node.js server** (`npm run build`, [standalone output](https://nextjs.org/docs/app/api-reference/config/next-config-js/output)):
+  full feature set, including HTTP security headers and image optimisation. Used by Docker,
+  Vercel and any Node.js host.
+- **Static export** (`npm run build:static`): plain files in `out/` for **GitHub Pages** or any
+  static host.
+
+**GitHub Pages (free)**: enable _Settings → Pages → Source: GitHub Actions_ and push to `main`.
+The [deploy workflow](.github/workflows/deploy-pages.yml) tests, builds and publishes the site
+to `https://<user>.github.io/<repository>/`. Step-by-step instructions, from `git init` to a
+custom domain, are in **[docs/guides/github.md](docs/guides/github.md)**.
 
 **Docker**
 
@@ -284,16 +298,16 @@ sprint reviews and retrospectives.
 
 ## Documentation
 
-| Area         | Documents                                                                                                                                                                                         |
-| ------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Index        | [docs/README.md](docs/README.md)                                                                                                                                                                  |
-| Agile        | [Process](docs/agile/README.md) · [Vision](docs/agile/product-vision.md) · [Backlog](docs/agile/product-backlog.md) · [Release plan](docs/agile/release-plan.md) · [Sprints](docs/agile/sprints/) |
-| Architecture | [Overview](docs/architecture/overview.md) · [Decision records](docs/architecture/adr/README.md)                                                                                                   |
-| Guides       | [Development](docs/guides/development.md) · [Testing](docs/guides/testing.md) · [Deployment](docs/guides/deployment.md) · [Content editing](docs/guides/content-editing.md)                       |
-| Operations   | [Release checklist](docs/operations/release-checklist.md) · [Quality report](docs/quality/quality-report.md)                                                                                      |
-| Content      | [Content inventory](docs/content/content-inventory.md) · [Asset register](docs/content/asset-register.md)                                                                                         |
-| Migration    | [From Create React App](docs/migration/from-create-react-app.md)                                                                                                                                  |
-| Project      | [Changelog](CHANGELOG.md) · [Contributing](CONTRIBUTING.md) · [Code of conduct](CODE_OF_CONDUCT.md) · [Security](SECURITY.md)                                                                     |
+| Area         | Documents                                                                                                                                                                                                                    |
+| ------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Index        | [docs/README.md](docs/README.md)                                                                                                                                                                                             |
+| Agile        | [Process](docs/agile/README.md) · [Vision](docs/agile/product-vision.md) · [Backlog](docs/agile/product-backlog.md) · [Release plan](docs/agile/release-plan.md) · [Sprints](docs/agile/sprints/)                            |
+| Architecture | [Overview](docs/architecture/overview.md) · [Decision records](docs/architecture/adr/README.md)                                                                                                                              |
+| Guides       | [Development](docs/guides/development.md) · [Testing](docs/guides/testing.md) · [Deployment](docs/guides/deployment.md) · [GitHub & GitHub Pages](docs/guides/github.md) · [Content editing](docs/guides/content-editing.md) |
+| Operations   | [Release checklist](docs/operations/release-checklist.md) · [Quality report](docs/quality/quality-report.md)                                                                                                                 |
+| Content      | [Content inventory](docs/content/content-inventory.md) · [Asset register](docs/content/asset-register.md)                                                                                                                    |
+| Migration    | [From Create React App](docs/migration/from-create-react-app.md)                                                                                                                                                             |
+| Project      | [Changelog](CHANGELOG.md) · [Contributing](CONTRIBUTING.md) · [Code of conduct](CODE_OF_CONDUCT.md) · [Security](SECURITY.md)                                                                                                |
 
 ## Contributing
 

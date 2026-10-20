@@ -1,10 +1,17 @@
 import { fireEvent, render, screen, within } from "@testing-library/react";
 import { products } from "@/content/products";
-import CataloguePage, { metadata } from "./page";
+import type { ResolvingMetadata } from "next";
+import CataloguePage, { generateMetadata } from "./page";
 
 describe("Catalogue page", () => {
-  it("has its own title for search results and browser tabs", () => {
+  it("has its own title and keeps the inherited share image", async () => {
+    const parent = Promise.resolve({
+      openGraph: { siteName: "ARAC Polywrap Limited", images: [{ url: "/og.jpg" }] },
+    }) as unknown as ResolvingMetadata;
+    const metadata = await generateMetadata({} as PageProps<"/catalogue">, parent);
+
     expect(metadata.title).toBe("Product catalogue");
+    expect(metadata.openGraph).toMatchObject({ images: [{ url: "/og.jpg" }] });
   });
 
   it("lists every product with its features", () => {

@@ -16,43 +16,45 @@ Ordered by priority within each epic. Story points use the scale in the
 
 ## Summary
 
-| ID      | Story                                                 | Epic | MoSCoW | Pts | Sprint | Status                                  |
-| ------- | ----------------------------------------------------- | ---- | ------ | --: | ------ | --------------------------------------- |
-| APW-001 | Scaffold Next.js App Router project                   | E1   | Must   |   3 | 0      | Done                                    |
-| APW-002 | Code-quality tooling and commit conventions           | E1   | Must   |   2 | 0      | Done                                    |
-| APW-003 | Unit and end-to-end test harness                      | E1   | Must   |   3 | 0      | Done                                    |
-| APW-004 | Continuous integration and repository templates       | E1   | Must   |   2 | 0      | Done                                    |
-| APW-005 | Migrate and optimise legacy image assets              | E1   | Must   |   2 | 0      | Done                                    |
-| APW-006 | Agile artefacts: vision, backlog, DoR, DoD            | E1   | Must   |   1 | 0      | Done                                    |
-| APW-010 | Brand colour scheme and typography                    | E2   | Must   |   3 | 1      | Done                                    |
-| APW-011 | Sticky header with working section navigation         | E2   | Must   |   3 | 1      | Done                                    |
-| APW-013 | Accessible mobile navigation menu                     | E2   | Must   |   3 | 1      | Done                                    |
-| APW-015 | Footer with structured links and social icons         | E2   | Must   |   2 | 1      | Done                                    |
-| APW-020 | Hero carousel                                         | E3   | Must   |   5 | 1      | Done                                    |
-| APW-021 | Products showcase with decorated layout               | E3   | Must   |   5 | 1      | Done                                    |
-| APW-022 | Animated achievement counters                         | E3   | Should |   2 | 1      | Done                                    |
-| APW-023 | Contact section with phone, e-mail, addresses and map | E3   | Must   |   3 | 1      | Done                                    |
-| APW-012 | Highlight the active section in the navigation        | E2   | Should |   2 | 2      | Done                                    |
-| APW-014 | Back-to-top button                                    | E2   | Should |   1 | 2      | Done                                    |
-| APW-024 | Services section                                      | E3   | Should |   3 | 2      | Done                                    |
-| APW-025 | Testimonials with circular progress indicators        | E3   | Should |   5 | 2      | Done                                    |
-| APW-026 | About us section                                      | E3   | Should |   2 | 2      | Done                                    |
-| APW-027 | Downloadable product catalogue                        | E3   | Should |   5 | 2      | Done                                    |
-| APW-040 | SEO: metadata, Open Graph, sitemap, robots, JSON-LD   | E4   | Must   |   3 | 3      | Done                                    |
-| APW-041 | Accessibility audit and automated axe checks          | E4   | Must   |   3 | 3      | Done                                    |
-| APW-042 | HTTP security headers and Content Security Policy     | E4   | Must   |   2 | 3      | Done                                    |
-| APW-043 | Production container image                            | E4   | Should |   3 | 3      | Done                                    |
-| APW-044 | Project documentation set                             | E4   | Must   |   5 | 3      | Done                                    |
-| APW-045 | Content-readiness release gate                        | E4   | Should |   1 | 3      | Done                                    |
-| APW-046 | Meet the mobile performance budget (Lighthouse ≥ 90)  | E4   | Must   |   2 | 3      | Done                                    |
-| APW-028 | Team members section                                  | E3   | Won't  |   3 | —      | Blocked — awaiting team bios and photos |
-| APW-054 | Replace placeholder content with approved copy        | E4   | Must   |   2 | —      | Blocked — awaiting Product Owner        |
-| APW-055 | Vector logo and licensed photography                  | E4   | Must   |   2 | —      | Blocked — awaiting Product Owner        |
-| APW-050 | Enquiry form with server-side delivery                | E5   | Could  |   5 | —      | Needs refinement                        |
-| APW-051 | Bangla (bn) localisation                              | E5   | Could  |   8 | —      | Needs refinement                        |
-| APW-052 | Headless CMS for content editing                      | E5   | Could  |   8 | —      | Needs refinement                        |
-| APW-053 | Privacy-friendly analytics with consent               | E5   | Could  |   3 | —      | Needs refinement                        |
-| APW-056 | Individual product detail pages                       | E5   | Could  |   5 | —      | Needs refinement                        |
+| ID      | Story                                                   | Epic | MoSCoW | Pts | Sprint | Status                                  |
+| ------- | ------------------------------------------------------- | ---- | ------ | --: | ------ | --------------------------------------- |
+| APW-001 | Scaffold Next.js App Router project                     | E1   | Must   |   3 | 0      | Done                                    |
+| APW-002 | Code-quality tooling and commit conventions             | E1   | Must   |   2 | 0      | Done                                    |
+| APW-003 | Unit and end-to-end test harness                        | E1   | Must   |   3 | 0      | Done                                    |
+| APW-004 | Continuous integration and repository templates         | E1   | Must   |   2 | 0      | Done                                    |
+| APW-005 | Migrate and optimise legacy image assets                | E1   | Must   |   2 | 0      | Done                                    |
+| APW-006 | Agile artefacts: vision, backlog, DoR, DoD              | E1   | Must   |   1 | 0      | Done                                    |
+| APW-010 | Brand colour scheme and typography                      | E2   | Must   |   3 | 1      | Done                                    |
+| APW-011 | Sticky header with working section navigation           | E2   | Must   |   3 | 1      | Done                                    |
+| APW-013 | Accessible mobile navigation menu                       | E2   | Must   |   3 | 1      | Done                                    |
+| APW-015 | Footer with structured links and social icons           | E2   | Must   |   2 | 1      | Done                                    |
+| APW-020 | Hero carousel                                           | E3   | Must   |   5 | 1      | Done                                    |
+| APW-021 | Products showcase with decorated layout                 | E3   | Must   |   5 | 1      | Done                                    |
+| APW-022 | Animated achievement counters                           | E3   | Should |   2 | 1      | Done                                    |
+| APW-023 | Contact section with phone, e-mail, addresses and map   | E3   | Must   |   3 | 1      | Done                                    |
+| APW-012 | Highlight the active section in the navigation          | E2   | Should |   2 | 2      | Done                                    |
+| APW-014 | Back-to-top button                                      | E2   | Should |   1 | 2      | Done                                    |
+| APW-024 | Services section                                        | E3   | Should |   3 | 2      | Done                                    |
+| APW-025 | Testimonials with circular progress indicators          | E3   | Should |   5 | 2      | Done                                    |
+| APW-026 | About us section                                        | E3   | Should |   2 | 2      | Done                                    |
+| APW-027 | Downloadable product catalogue                          | E3   | Should |   5 | 2      | Done                                    |
+| APW-040 | SEO: metadata, Open Graph, sitemap, robots, JSON-LD     | E4   | Must   |   3 | 3      | Done                                    |
+| APW-041 | Accessibility audit and automated axe checks            | E4   | Must   |   3 | 3      | Done                                    |
+| APW-042 | HTTP security headers and Content Security Policy       | E4   | Must   |   2 | 3      | Done                                    |
+| APW-043 | Production container image                              | E4   | Should |   3 | 3      | Done                                    |
+| APW-044 | Project documentation set                               | E4   | Must   |   5 | 3      | Done                                    |
+| APW-045 | Content-readiness release gate                          | E4   | Should |   1 | 3      | Done                                    |
+| APW-046 | Meet the mobile performance budget (Lighthouse ≥ 90)    | E4   | Must   |   2 | 3      | Done                                    |
+| APW-047 | Host the site on GitHub Pages with automatic deployment | E4   | Should |   5 | 4      | Done                                    |
+| APW-048 | Fix: catalogue page lost the share image                | E4   | Must   |   1 | 4      | Done                                    |
+| APW-028 | Team members section                                    | E3   | Won't  |   3 | —      | Blocked — awaiting team bios and photos |
+| APW-054 | Replace placeholder content with approved copy          | E4   | Must   |   2 | —      | Blocked — awaiting Product Owner        |
+| APW-055 | Vector logo and licensed photography                    | E4   | Must   |   2 | —      | Blocked — awaiting Product Owner        |
+| APW-050 | Enquiry form with server-side delivery                  | E5   | Could  |   5 | —      | Needs refinement                        |
+| APW-051 | Bangla (bn) localisation                                | E5   | Could  |   8 | —      | Needs refinement                        |
+| APW-052 | Headless CMS for content editing                        | E5   | Could  |   8 | —      | Needs refinement                        |
+| APW-053 | Privacy-friendly analytics with consent                 | E5   | Could  |   3 | —      | Needs refinement                        |
+| APW-056 | Individual product detail pages                         | E5   | Could  |   5 | —      | Needs refinement                        |
 
 ## Legacy `work_left.txt` traceability
 
@@ -274,6 +276,21 @@ _As a visitor on a mid-range phone, I want the page to respond immediately, so t
 
 - **Given** a production build, **when** Lighthouse runs with mobile throttling, **then** Performance is at least 90 and Total Blocking Time is under 200 ms.
 - Discovered in Sprint 3 when the first audit scored 65; see the [quality report](../quality/quality-report.md).
+
+#### APW-047 · Host the site on GitHub Pages — Sprint 4
+
+_As the site owner, I want to host the website for free on GitHub, so that every merge to `main` goes live without managing a server._
+
+- **Given** GitHub Pages is enabled with source "GitHub Actions", **when** I push to `main`, **then** the site is tested and published to `https://<user>.github.io/<repository>/` automatically.
+- **Then** all links, images, icons, canonical URLs and the sitemap work under the repository sub-path and with a custom domain.
+- **Then** the menu still scrolls to sections, and `/catalogue/` and the 404 page work on the static host.
+- **Then** the full E2E suite runs against the static export before every deployment, and a guide explains every step from `git init` to a custom domain.
+
+#### APW-048 · Fix: catalogue page lost the share image — Sprint 4
+
+Found while testing APW-047: the catalogue page's own `openGraph` metadata replaced the inherited
+share image, so links to `/catalogue` had no preview picture. Fixed by extending the parent
+metadata; covered by unit and E2E tests.
 
 #### APW-054 · Replace placeholder content — Blocked
 

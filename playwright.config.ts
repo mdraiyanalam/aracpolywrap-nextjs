@@ -3,12 +3,16 @@ import { defineConfig, devices } from "@playwright/test";
 const PORT = Number(process.env.E2E_PORT ?? 3100);
 const baseURL = process.env.E2E_BASE_URL ?? `http://localhost:${PORT}`;
 
+// `true` when testing the static export (GitHub Pages build in out/) instead of the Node server.
+const staticExport = process.env.E2E_STATIC_EXPORT === "true";
+
 // Lets sandboxes with a pre-installed Chromium skip `npx playwright install`.
 const executablePath = process.env.PLAYWRIGHT_CHROMIUM_EXECUTABLE || undefined;
 
 /**
- * End-to-end tests run against the production artefact — the standalone server that also
- * ships in the Docker image — so headers, CSP and image optimisation behave as in production.
+ * End-to-end tests run against a production artefact: by default the standalone server that
+ * also ships in the Docker image; with E2E_STATIC_EXPORT=true the static export in out/, served
+ * the way GitHub Pages serves it (`npm run test:e2e:static`).
  */
 export default defineConfig({
   testDir: "./e2e",
@@ -37,7 +41,7 @@ export default defineConfig({
   webServer: process.env.E2E_BASE_URL
     ? undefined
     : {
-        command: "node .next/standalone/server.js",
+        command: staticExport ? "node scripts/serve-static.mjs" : "node .next/standalone/server.js",
         env: { PORT: String(PORT), HOSTNAME: "127.0.0.1" },
         url: baseURL,
         reuseExistingServer: !process.env.CI,

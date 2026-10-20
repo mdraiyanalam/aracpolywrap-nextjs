@@ -79,10 +79,11 @@ Next.js 16.4 differs from older versions. Read the matching page in
 
 ## Debugging tips
 
-| Symptom                                                            | Likely cause / fix                                                                                 |
-| ------------------------------------------------------------------ | -------------------------------------------------------------------------------------------------- |
-| Build error about `new Date()` or `Math.random()` during prerender | Cache Components: move the call into a `"use cache"` function, an effect, or behind `connection()` |
-| An element shows on mobile despite `hidden`                        | Utility conflict with the component's own `display` class; wrap it instead                         |
-| Section scrolls under the header                                   | The section must be a direct target of `/#id`; `scroll-padding-top` handles the offset             |
-| `next start` warns about standalone                                | Use `npm start` (runs `.next/standalone/server.js`)                                                |
-| Fonts fail to download during build                                | The build needs internet access to Google Fonts once; behind a proxy set `HTTPS_PROXY`             |
+| Symptom                                           | Likely cause / fix                                                                                              |
+| ------------------------------------------------- | --------------------------------------------------------------------------------------------------------------- |
+| Static export: page has no styles on GitHub Pages | Wrong base path; build with `npm run build:static -- --base-path /<repository>` or deploy via the workflow      |
+| Static export fails on a new route or API         | Static hosts cannot run server code (no headers, rewrites, Server Actions, per-request rendering); see ADR 0009 |
+| An element shows on mobile despite `hidden`       | Utility conflict with the component's own `display` class; wrap it instead                                      |
+| Section scrolls under the header                  | The section must be a direct target of `/#id`; `scroll-padding-top` handles the offset                          |
+| `next start` warns about standalone               | Use `npm start` (runs `.next/standalone/server.js`)                                                             |
+| Fonts fail to download during build               | The build needs internet access to Google Fonts once; behind a proxy set `HTTPS_PROXY`                          |

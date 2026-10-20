@@ -1,48 +1,32 @@
 import type { NextConfig } from "next";
+import { securityHeaders } from "./src/lib/security";
 
 const isDev = process.env.NODE_ENV === "development";
 
 /**
- * Content Security Policy. Next.js injects inline scripts for hydration, so `'unsafe-inline'`
- * is required without nonces (nonces would force every page to render dynamically).
- * Google Maps is the only third-party origin, and only as a frame.
+ * Two build targets:
+ * - default: `standalone` Node.js server (Docker, Vercel, any Node host) with security
+ *   headers, image optimisation and daily revalidation;
+ * - `STATIC_EXPORT=true`: plain HTML/CSS/JS in `out/` for static hosts such as GitHub Pages
+ *   (see docs/guides/github-pages.md and ADR 0009).
  */
-const contentSecurityPolicy = [
-  "default-src 'self'",
-  `script-src 'self' 'unsafe-inline'${isDev ? " 'unsafe-eval'" : ""}`,
-  "style-src 'self' 'unsafe-inline'",
-  "img-src 'self' data: blob:",
-  "font-src 'self'",
-  `connect-src 'self'${isDev ? " ws: wss:" : ""}`,
-  "frame-src https://www.google.com https://maps.google.com",
-  "object-src 'none'",
-  "base-uri 'self'",
-  "form-action 'self'",
-  "frame-ancestors 'none'",
-].join("; ");
-
-const securityHeaders = [
-  { key: "Content-Security-Policy", value: contentSecurityPolicy },
-  { key: "Strict-Transport-Security", value: "max-age=63072000; includeSubDomains; preload" },
-  { key: "X-Content-Type-Options", value: "nosniff" },
-  { key: "X-Frame-Options", value: "DENY" },
-  { key: "Referrer-Policy", value: "strict-origin-when-cross-origin" },
-  {
-    key: "Permissions-Policy",
-    value: "camera=(), microphone=(), geolocation=(), payment=(), usb=(), browsing-topics=()",
-  },
-  { key: "Cross-Origin-Opener-Policy", value: "same-origin" },
-];
+const isStaticExport = process.env.STATIC_EXPORT === "true";
+const basePath = (process.env.NEXT_PUBLIC_BASE_PATH ?? "").replace(/\/$/, "");
 
 const nextConfig: NextConfig = {
-  cacheComponents: true,
-  partialPrefetching: true,
-  // Self-contained server bundle for the Docker image (see Dockerfile).
-  output: "standalone",
+  // Cache Components stays off: every page is static, and in Next.js 16.4 it cannot be combined
+  // with `output: "export"` for metadata routes (sitemap, robots, manifest). See ADR 0009.
+  output: isStaticExport ? "export" : "standalone",
+  ...(basePath ? { basePath } : {}),
+  // Static hosts serve folders as /catalogue/ (catalogue/index.html). Matching that keeps
+  // in-page links on the same URL, so they scroll instead of reloading.
+  trailingSlash: isStaticExport,
+  env: { NEXT_PUBLIC_STATIC_EXPORT: String(isStaticExport) },
   poweredByHeader: false,
-  images: {
-    formats: ["image/avif", "image/webp"],
-  },
+  images: isStaticExport
+    ? // Static hosts have no image optimiser; the source images are pre-optimised (APW-005).
+      { unoptimized: true }
+    : { formats: ["image/avif", "image/webp"] },
   turbopack: {
     rules: {
       "*.css": {
@@ -51,9 +35,14 @@ const nextConfig: NextConfig = {
       },
     },
   },
-  async headers() {
-    return [{ source: "/:path*", headers: securityHeaders }];
-  },
+  // Static hosts cannot send headers; the static export uses a <meta> CSP instead.
+  ...(isStaticExport
+    ? {}
+    : {
+        async headers() {
+          return [{ source: "/:path*", headers: securityHeaders({ isDev }) }];
+        },
+      }),
 };
 
 export default nextConfig;

@@ -8,6 +8,29 @@ All notable changes to this project are documented here. The format follows
 
 ## [Unreleased]
 
+### Added
+
+- **GitHub Pages hosting** (APW-047): a static-export build target (`npm run build:static`,
+  `npm run preview:static`, `npm run test:e2e:static`) and a `Deploy to GitHub Pages` workflow
+  that runs the E2E suite against the static site, then publishes it to
+  `https://<user>.github.io/<repository>/` or a custom domain.
+- CI job that tests the static export on every pull request.
+- [GitHub guide](docs/guides/github.md): from `git init` to pushing the code, enabling Pages,
+  custom domains and troubleshooting; [ADR 0009](docs/architecture/adr/0009-static-export-for-github-pages.md).
+
+### Changed
+
+- Cache Components and Partial Prefetching are turned off. In Next.js 16.4 they cannot be combined
+  with a static export of metadata routes, and the site is fully static anyway (ADR 0009).
+- The footer's copyright year is rendered at build time and corrected in the browser, so pages
+  no longer revalidate daily and are served with long-lived cache headers.
+- URL helpers (`absoluteUrl`, `pagePath`, `withBasePath`, `assetUrl`) handle sub-paths and
+  trailing slashes; the Content Security Policy is defined once in `src/lib/security.ts`.
+
+### Fixed
+
+- The catalogue page lost the share image when linked on social media (APW-048).
+
 ## [1.0.0] — 2026-10-20 — Sprint 3: Production readiness
 
 ### Added

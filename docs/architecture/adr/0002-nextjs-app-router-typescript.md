@@ -1,6 +1,6 @@
 # 0002. Rebuild on Next.js App Router with TypeScript
 
-- **Status:** Accepted
+- **Status:** Accepted. The Cache Components part is superseded by [0009](./0009-static-export-for-github-pages.md)
 - **Date:** 2026-10-19
 - **Story:** APW-001
 

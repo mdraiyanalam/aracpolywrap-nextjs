@@ -1,6 +1,6 @@
 import { company } from "@/content/company";
 import { products } from "@/content/products";
-import { absoluteUrl } from "./site";
+import { absoluteUrl, assetUrl } from "./site";
 
 /** Placeholder contact values must never reach search engines. */
 const isRealPhone = (phone: string) => /^\+?\d[\d\s-]{6,}$/.test(phone);
@@ -8,7 +8,7 @@ const isRealEmail = (email: string) =>
   /^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email) && !email.endsWith("@example.com");
 
 /** schema.org `Organization` for the home page. https://schema.org/Organization */
-export function organizationJsonLd(logoPath: string) {
+export function organizationJsonLd(logoSrc: string) {
   const { phone, email } = company.contact;
 
   return {
@@ -16,7 +16,7 @@ export function organizationJsonLd(logoPath: string) {
     "@type": "Organization",
     name: company.name,
     url: absoluteUrl("/"),
-    logo: absoluteUrl(logoPath),
+    logo: assetUrl(logoSrc),
     description: company.description,
     address: company.addresses.map((address) => ({
       "@type": "PostalAddress",

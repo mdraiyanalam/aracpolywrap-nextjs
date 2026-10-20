@@ -32,9 +32,13 @@ test.describe("SEO and metadata", () => {
     expect(data.hasOfferCatalog.itemListElement).toHaveLength(6);
   });
 
-  test("catalogue has its own canonical URL", async ({ page }) => {
+  test("catalogue has its own canonical URL and keeps the share image", async ({ page }) => {
     await page.goto("/catalogue");
-    await expect(page.locator('link[rel="canonical"]')).toHaveAttribute("href", /\/catalogue$/);
+    await expect(page.locator('link[rel="canonical"]')).toHaveAttribute("href", /\/catalogue\/?$/);
+    await expect(page.locator('meta[property="og:image"]')).toHaveAttribute(
+      "content",
+      /opengraph-image/,
+    );
   });
 
   test("robots.txt, sitemap.xml and the manifest are served", async ({ request }) => {
@@ -45,7 +49,7 @@ test.describe("SEO and metadata", () => {
     const sitemap = await request.get("/sitemap.xml");
     expect(sitemap.ok()).toBe(true);
     const xml = await sitemap.text();
-    expect(xml).toContain("/catalogue</loc>");
+    expect(xml).toMatch(/\/catalogue\/?<\/loc>/);
 
     const manifest = await request.get("/manifest.webmanifest");
     expect(manifest.ok()).toBe(true);

@@ -4,12 +4,13 @@ Each sprint ends with a tagged, potentially shippable increment. Versions follow
 [Semantic Versioning](https://semver.org/): `0.x` while the site reaches parity, `1.0.0` when it is
 production-ready.
 
-| Sprint | Theme                           | Version  | Planned pts | Done pts | Status   |
-| ------ | ------------------------------- | -------- | ----------: | -------: | -------- |
-| 0      | Discovery and foundations       | `v0.1.0` |          13 |       13 | Released |
-| 1      | MVP parity with the legacy site | `v0.2.0` |          26 |       26 | Released |
-| 2      | Close legacy gaps, new sections | `v0.3.0` |          18 |       18 | Released |
-| 3      | Production readiness            | `v1.0.0` |          17 |       19 | Released |
+| Sprint | Theme                                      | Version  | Planned pts | Done pts | Status      |
+| ------ | ------------------------------------------ | -------- | ----------: | -------: | ----------- |
+| 0      | Discovery and foundations                  | `v0.1.0` |          13 |       13 | Released    |
+| 1      | MVP parity with the legacy site            | `v0.2.0` |          26 |       26 | Released    |
+| 2      | Close legacy gaps, new sections            | `v0.3.0` |          18 |       18 | Released    |
+| 3      | Production readiness                       | `v1.0.0` |          17 |       19 | Released    |
+| 4      | Free hosting on GitHub Pages (release 1.1) | `v1.1.0` |           5 |        6 | In progress |
 
 ## Velocity
 

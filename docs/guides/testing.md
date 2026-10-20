@@ -13,8 +13,10 @@ practical how-to.
 | Accessibility  | part of E2E             | `e2e/accessibility.spec.ts`          | axe-core in Chromium       |
 | Content gate   | `npm run content:check` | `scripts/check-content.mjs`          | Node                       |
 
-At v1.0.0: **63 unit tests** in 13 files and **59 E2E checks** (64 cases, 5 skipped by design
-because they apply to only one of desktop/mobile).
+Currently: **68 unit tests** in 15 files. The E2E suite has 66 cases: against the Node server,
+**59 pass** and 7 are skipped by design (desktop-only/mobile-only cases and the static-only CSP
+test); against the static export, **55 pass** and 11 are skipped (HTTP header tests cannot apply
+to a static host).
 
 ## Unit tests
 
@@ -32,8 +34,8 @@ because they apply to only one of desktop/mobile).
   `vi.mocked(usePathname).mockReturnValue("/catalogue")`.
 - Timers and animation frames: `vi.useFakeTimers({ toFake: ["requestAnimationFrame", "performance"] })`
   and `vi.advanceTimersByTime(ms)` inside `act()`.
-- Async Server Components (for example `CopyrightYears`) cannot be rendered by Testing Library;
-  cover them in E2E.
+- Async Server Components cannot be rendered by Testing Library; keep logic in client components
+  or plain functions, or cover it in E2E.
 
 ## End-to-end tests
 
@@ -49,6 +51,16 @@ npx playwright show-report               # open the last HTML report
 - `expectBelowHeader(page, "#id")` asserts a section scrolled into view without being hidden
   under the sticky header.
 - Use `isMobile` to skip tests that only apply to one layout.
+
+### Testing the static export (GitHub Pages build)
+
+```bash
+npm run test:e2e:static     # builds out/ without a base path, serves it like GitHub Pages, runs the suite
+```
+
+`E2E_STATIC_EXPORT=true` switches the web server to `scripts/serve-static.mjs`, skips the HTTP
+header tests and runs a `<meta>` CSP test instead. The deploy workflow runs this before every
+GitHub Pages deployment, and CI runs it on every pull request.
 
 ### Running against another server
 

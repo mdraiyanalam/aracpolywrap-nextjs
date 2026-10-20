@@ -54,7 +54,7 @@ test.describe("product catalogue page", () => {
       .getByRole("region", { name: "Product catalogue" })
       .getByRole("link", { name: "View catalogue" })
       .click();
-    await expect(page).toHaveURL(/\/catalogue$/);
+    await expect(page).toHaveURL(/\/catalogue\/?$/);
     await expect(page).toHaveTitle(/^Product catalogue \| ARAC Polywrap Limited$/);
   });
 

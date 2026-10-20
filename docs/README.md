@@ -23,12 +23,13 @@ Start with the project [README](../README.md). This index lists everything under
 
 ## Guides
 
-| Guide                                          | For                                                    |
-| ---------------------------------------------- | ------------------------------------------------------ |
-| [Development](./guides/development.md)         | Setting up, everyday commands, common tasks, debugging |
-| [Testing](./guides/testing.md)                 | Unit, E2E and accessibility tests; CI                  |
-| [Deployment](./guides/deployment.md)           | Docker, Vercel, Node hosts, proxies, caching, rollback |
-| [Content editing](./guides/content-editing.md) | Changing copy, contact details, products and images    |
+| Guide                                          | For                                                                           |
+| ---------------------------------------------- | ----------------------------------------------------------------------------- |
+| [Development](./guides/development.md)         | Setting up, everyday commands, common tasks, debugging                        |
+| [Testing](./guides/testing.md)                 | Unit, E2E and accessibility tests; CI                                         |
+| [Deployment](./guides/deployment.md)           | Docker, Vercel, Node hosts, GitHub Pages, proxies, caching, rollback          |
+| [GitHub and GitHub Pages](./guides/github.md)  | From `git init` to pushing the code and hosting the site free on GitHub Pages |
+| [Content editing](./guides/content-editing.md) | Changing copy, contact details, products and images                           |
 
 ## Operations and quality
 

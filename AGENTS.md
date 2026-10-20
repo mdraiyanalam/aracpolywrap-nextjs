@@ -7,3 +7,9 @@ This version has breaking changes — APIs, conventions, and file structure may 
 This block is written and re-added by `next dev` — verify at `node_modules/next/dist/server/lib/generate-agent-files.js`. Removing it from a diff only re-creates the uncommitted change; committing it with your work keeps the tree clean.
 
 <!-- END:nextjs-agent-rules -->
+
+## Project notes for coding agents
+
+- Business content lives in `src/content/` — never hard-code copy in components.
+- Follow [CONTRIBUTING.md](CONTRIBUTING.md) and the [Definition of Done](docs/agile/definition-of-done.md).
+- Run `npm run validate` before proposing a change; run `npm run test:e2e` for user-facing changes.

@@ -1,5 +1,5 @@
 import { ArrowLeft, CircleCheck, Mail, MapPin, Phone } from "lucide-react";
-import type { Metadata } from "next";
+import type { Metadata, ResolvingMetadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import logo from "@/assets/images/brand/logo.png";
@@ -9,17 +9,36 @@ import { SectionHeading } from "@/components/ui/section-heading";
 import { company, formatAddress } from "@/content/company";
 import { products } from "@/content/products";
 import { sectionCopy } from "@/content/sections";
+import { pagePath } from "@/lib/site";
 
 const description = `Printable catalogue of ${company.name} polyethylene films: ${products
   .map((p) => p.name.toLowerCase())
   .join(", ")}.`;
 
-export const metadata: Metadata = {
-  title: "Product catalogue",
-  description,
-  alternates: { canonical: "/catalogue" },
-  openGraph: { url: "/catalogue", title: `Product catalogue | ${company.name}`, description },
-};
+/**
+ * A page-level `openGraph` object replaces the inherited one, so the root share image and site
+ * details are carried over explicitly from the parent metadata.
+ */
+export async function generateMetadata(
+  _props: PageProps<"/catalogue">,
+  parent: ResolvingMetadata,
+): Promise<Metadata> {
+  const inherited = (await parent).openGraph;
+  return {
+    title: "Product catalogue",
+    description,
+    alternates: { canonical: pagePath("/catalogue") },
+    openGraph: {
+      type: "website",
+      siteName: inherited?.siteName ?? company.name,
+      locale: inherited?.locale,
+      images: inherited?.images ?? [],
+      url: pagePath("/catalogue"),
+      title: `Product catalogue | ${company.name}`,
+      description,
+    },
+  };
+}
 
 /** Print-optimised catalogue generated from the same product data as the home page. */
 export default function CataloguePage() {

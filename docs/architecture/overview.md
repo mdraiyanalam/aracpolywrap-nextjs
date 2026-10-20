@@ -27,18 +27,18 @@ flowchart LR
 
 ## Rendering strategy
 
-| Route                                                  | Rendering                     | Notes                                                 |
-| ------------------------------------------------------ | ----------------------------- | ----------------------------------------------------- |
-| `/`                                                    | Static (prerendered at build) | Revalidated daily because of the footer's cached year |
-| `/catalogue`                                           | Static                        | Same data as `/`, print-optimised                     |
-| `/_not-found`                                          | Static                        | Branded 404, `noindex`                                |
-| `/sitemap.xml`, `/robots.txt`, `/manifest.webmanifest` | Static                        | Generated from `src/app/*.ts`                         |
-| `/icon.svg`, `/apple-icon.png`, `/opengraph-image.jpg` | Static                        | File-based metadata                                   |
+| Route                                                  | Rendering                     | Notes                                   |
+| ------------------------------------------------------ | ----------------------------- | --------------------------------------- |
+| `/`                                                    | Static (prerendered at build) | Footer year is corrected in the browser |
+| `/catalogue`                                           | Static                        | Same data as `/`, print-optimised       |
+| `/_not-found`                                          | Static                        | Branded 404, `noindex`                  |
+| `/sitemap.xml`, `/robots.txt`, `/manifest.webmanifest` | Static                        | Generated from `src/app/*.ts`           |
+| `/icon.svg`, `/apple-icon.png`, `/opengraph-image.jpg` | Static                        | File-based metadata                     |
 
-[Cache Components](https://nextjs.org/docs/app/api-reference/config/next-config-js/cacheComponents)
-is enabled (the Next.js 16.4 default). Under it, reading the clock during prerender is an error,
-so the copyright year is a small `"use cache"` component with `cacheLife("days")`. That is why the
-build output shows a one-day revalidation for pages.
+Every route is prerendered once at build time; nothing renders per request. Cache Components is
+**off** ([ADR 0009](./adr/0009-static-export-for-github-pages.md)) because it cannot be combined
+with the static export in Next.js 16.4. The only time-dependent value, the copyright year, is
+rendered at build time and corrected in the browser by a small client component.
 
 ## Code organisation
 
@@ -110,6 +110,7 @@ leaves, so the page ships very little JavaScript.
 | `CircularMeter`  | Ring fill animation when scrolled into view                   |
 | `BackToTop`      | Scroll position, scrolling and focus management               |
 | `PrintButton`    | Calls `window.print()`                                        |
+| `CopyrightYears` | Corrects the build-time year to the visitor's current year    |
 | `error.tsx`      | Error boundaries must be client components                    |
 
 Animated components render their **final state on the server** (numbers, filled rings), so the
@@ -158,3 +159,19 @@ defined once in `next.config.ts` and asserted by `e2e/security.spec.ts`.
 `node_modules` it needs. A `postbuild` script copies `public/` and `.next/static/` into it, so the
 same self-contained folder is used by `npm start`, the E2E tests and the Docker image. See the
 [deployment guide](../guides/deployment.md).
+
+With `STATIC_EXPORT=true` (`npm run build:static`) the same code is exported as plain files to
+`out/` for GitHub Pages: `output: "export"`, `trailingSlash: true`, unoptimised images, a
+`basePath` for project sites, and a `<meta>` Content Security Policy in place of HTTP headers.
+`.github/workflows/deploy-pages.yml` tests and publishes it. See the
+[GitHub guide](../guides/github.md).
+
+```mermaid
+flowchart LR
+  code[(One code base)] -->|npm run build| standalone[.next/standalone<br/>Node.js server]
+  code -->|npm run build:static| out[out/<br/>static files]
+  standalone --> docker[Docker image]
+  standalone --> node[Any Node.js host]
+  code --> vercel[Vercel]
+  out --> pages[GitHub Pages]
+```

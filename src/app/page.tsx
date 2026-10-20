@@ -10,12 +10,13 @@ import type { Metadata } from "next";
 import logo from "@/assets/images/brand/logo.png";
 import { company } from "@/content/company";
 import { heroSlides } from "@/content/hero";
+import { pagePath } from "@/lib/site";
 import { organizationJsonLd, serializeJsonLd } from "@/lib/structured-data";
 
 export const metadata: Metadata = {
-  alternates: { canonical: "/" },
+  alternates: { canonical: pagePath("/") },
   openGraph: {
-    url: "/",
+    url: pagePath("/"),
     title: `${company.name} — ${company.tagline}`,
     description: company.description,
   },

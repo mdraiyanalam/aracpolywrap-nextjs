@@ -7,6 +7,11 @@
 import { cp, rm } from "node:fs/promises";
 import { existsSync } from "node:fs";
 
+if (process.env.STATIC_EXPORT === "true") {
+  console.log("Static export: nothing to copy (output is in out/).");
+  process.exit(0);
+}
+
 const standalone = ".next/standalone";
 if (!existsSync(standalone)) {
   console.error("No .next/standalone directory — run `next build` first.");

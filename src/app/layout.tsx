@@ -5,7 +5,8 @@ import { SiteFooter } from "@/components/layout/site-footer";
 import { SiteHeader } from "@/components/layout/site-header";
 import { SkipLink } from "@/components/layout/skip-link";
 import { company } from "@/content/company";
-import { siteUrl } from "@/lib/site";
+import { contentSecurityPolicy } from "@/lib/security";
+import { isStaticExport, siteUrl } from "@/lib/site";
 import "./globals.css";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter", display: "swap" });
@@ -16,7 +17,9 @@ const montserrat = Montserrat({
 });
 
 export const metadata: Metadata = {
-  metadataBase: siteUrl,
+  // Origin only: Next.js already adds basePath to file-based metadata (icons, share image),
+  // and page URLs below are given with withBasePath().
+  metadataBase: new URL(siteUrl.origin),
   title: {
     default: `${company.name} — ${company.tagline}`,
     template: `%s | ${company.name}`,
@@ -46,6 +49,15 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       data-scroll-behavior="smooth"
       className={`${inter.variable} ${montserrat.variable}`}
     >
+      {isStaticExport ? (
+        // Static hosts (GitHub Pages) cannot send HTTP headers, so the CSP ships as a meta tag.
+        <head>
+          <meta
+            httpEquiv="Content-Security-Policy"
+            content={contentSecurityPolicy({ forMetaTag: true })}
+          />
+        </head>
+      ) : null}
       <body className="flex min-h-dvh flex-col">
         <SkipLink />
         <SiteHeader />
