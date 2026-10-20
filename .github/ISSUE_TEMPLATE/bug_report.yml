@@ -1,0 +1,46 @@
+name: Bug report
+description: Something on the website is broken or behaves unexpectedly.
+title: "[Bug] "
+labels: ["type: bug", "status: triage"]
+body:
+  - type: textarea
+    id: what
+    attributes:
+      label: What happened?
+      description: Describe the problem and what you expected instead.
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to reproduce
+      placeholder: |
+        1. Open the home page on a phone
+        2. Tap the menu button
+        3. ...
+    validations:
+      required: true
+  - type: input
+    id: url
+    attributes:
+      label: Page URL
+  - type: input
+    id: environment
+    attributes:
+      label: Browser / device / OS
+      placeholder: "Chrome 130 on Android 15, Pixel 7"
+  - type: dropdown
+    id: severity
+    attributes:
+      label: Severity
+      options:
+        - "S1 — site down or data/security issue"
+        - "S2 — key feature broken, no workaround"
+        - "S3 — feature broken, workaround exists"
+        - "S4 — cosmetic"
+    validations:
+      required: true
+  - type: textarea
+    id: extra
+    attributes:
+      label: Screenshots / logs

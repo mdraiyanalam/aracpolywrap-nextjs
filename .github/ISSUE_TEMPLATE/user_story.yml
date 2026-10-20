@@ -1,0 +1,47 @@
+name: User story
+description: A new piece of user-facing value for the product backlog.
+title: "[Story] "
+labels: ["type: story", "status: needs refinement"]
+body:
+  - type: input
+    id: epic
+    attributes:
+      label: Epic
+      description: Which epic does this belong to? (see docs/agile/product-backlog.md)
+      placeholder: "E3 — Content sections"
+  - type: textarea
+    id: story
+    attributes:
+      label: User story
+      description: As a <persona>, I want <capability>, so that <benefit>.
+      placeholder: |
+        As a procurement manager,
+        I want to see the full specification of each film,
+        so that I can shortlist products without calling sales.
+    validations:
+      required: true
+  - type: textarea
+    id: acceptance
+    attributes:
+      label: Acceptance criteria
+      description: Use Given / When / Then. Each criterion must be testable.
+      placeholder: |
+        - Given I am on the home page, when I click "Products", then the products section scrolls into view.
+    validations:
+      required: true
+  - type: dropdown
+    id: priority
+    attributes:
+      label: Priority (MoSCoW)
+      options: ["Must have", "Should have", "Could have", "Won't have (this release)"]
+    validations:
+      required: true
+  - type: dropdown
+    id: estimate
+    attributes:
+      label: Estimate (story points)
+      options: ["1", "2", "3", "5", "8", "13 — too big, split it"]
+  - type: textarea
+    id: notes
+    attributes:
+      label: Notes, dependencies, designs
