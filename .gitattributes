@@ -1,0 +1,14 @@
+# Normalise line endings in the repository (the legacy CRA code was committed with mixed CRLF/LF).
+* text=auto eol=lf
+
+# Binary assets
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.ico binary
+*.webp binary
+*.avif binary
+*.woff binary
+*.woff2 binary
+*.pdf binary

@@ -1,0 +1,84 @@
+@import "tailwindcss";
+
+/*
+ * Design tokens. Brand colours are sampled from the company logo:
+ *   navy  #2E3192 → brand-700
+ *   red   #ED1C24 → accent-500
+ * Use accent-600 (not 500) behind white text: it meets WCAG AA contrast (5.5:1); 500 does not.
+ */
+@theme {
+  --color-brand-50: #eef0fb;
+  --color-brand-100: #dfe2f7;
+  --color-brand-200: #c3c8f0;
+  --color-brand-300: #9ca3e4;
+  --color-brand-400: #7378d5;
+  --color-brand-500: #5458c6;
+  --color-brand-600: #3f42b0;
+  --color-brand-700: #2e3192;
+  --color-brand-800: #282a78;
+  --color-brand-900: #23255f;
+  --color-brand-950: #14153a;
+
+  --color-accent-50: #fef2f2;
+  --color-accent-100: #fde3e4;
+  --color-accent-200: #fbcbcd;
+  --color-accent-300: #f7a3a6;
+  --color-accent-400: #f16d72;
+  --color-accent-500: #ed1c24;
+  --color-accent-600: #d01219;
+  --color-accent-700: #ae0f15;
+  --color-accent-800: #8f1217;
+  --color-accent-900: #77151a;
+  --color-accent-950: #410508;
+
+  --spacing-header: 4.5rem;
+}
+
+@theme inline {
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-montserrat), var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    /* Keeps anchored sections clear of the sticky header. */
+    scroll-padding-top: calc(var(--spacing-header) + 1rem);
+  }
+
+  body {
+    @apply bg-white font-sans text-slate-700 antialiased;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    @apply font-display text-brand-950;
+    text-wrap: balance;
+  }
+
+  :focus-visible {
+    outline: 3px solid var(--color-accent-500);
+    outline-offset: 3px;
+  }
+
+  ::selection {
+    background-color: var(--color-brand-700);
+    color: white;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+}
