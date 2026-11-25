@@ -1,43 +1,41 @@
+# Dependabot is tuned to keep notifications low: one scheduled run a month, with every
+# update batched into a few grouped pull requests instead of one PR per package.
+#
+# - npm-minor-patch: safe updates. CI auto-merges this PR once every job passes
+#   (see the `dependabot-automerge` job in .github/workflows/ci.yml).
+# - npm-major: breaking updates. Review and merge these by hand.
+# - github-actions: workflow action updates, also reviewed by hand.
+#
+# Security updates are separate: GitHub opens those right away, whatever the schedule.
 version: 2
 updates:
   - package-ecosystem: npm
     directory: /
     schedule:
-      interval: weekly
-      day: monday
-    open-pull-requests-limit: 10
+      interval: monthly
+    open-pull-requests-limit: 5
     commit-message:
       prefix: "build(deps)"
     groups:
-      next-react:
-        patterns: ["next", "react", "react-dom", "eslint-config-next", "@types/react*"]
-      testing:
-        patterns:
-          [
-            "vitest",
-            "@vitest/*",
-            "@vitejs/*",
-            "@testing-library/*",
-            "jsdom",
-            "@playwright/test",
-            "@axe-core/*",
-          ]
-      tooling:
-        patterns:
-          [
-            "eslint*",
-            "prettier*",
-            "typescript",
-            "husky",
-            "lint-staged",
-            "@commitlint/*",
-            "tailwindcss",
-            "@tailwindcss/*",
-          ]
+      npm-minor-patch:
+        patterns: ["*"]
+        update-types: ["minor", "patch"]
+      npm-major:
+        patterns: ["*"]
+        update-types: ["major"]
+    ignore:
+      # Keep the Node typings on the runtime major (.nvmrc is 22). A newer major describes
+      # APIs the app's Node version does not have, and would let type errors slip through.
+      - dependency-name: "@types/node"
+        update-types: ["version-update:semver-major"]
 
   - package-ecosystem: github-actions
     directory: /
     schedule:
-      interval: weekly
+      interval: monthly
+    open-pull-requests-limit: 2
     commit-message:
       prefix: "ci(deps)"
+    groups:
+      github-actions:
+        patterns: ["*"]
