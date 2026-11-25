@@ -28,6 +28,10 @@ updates:
       # APIs the app's Node version does not have, and would let type errors slip through.
       - dependency-name: "@types/node"
         update-types: ["version-update:semver-major"]
+      # typescript-eslint does not support TypeScript 7 yet, so lint fails on it. Remove this
+      # once a typescript-eslint release lists TypeScript 7 as supported.
+      - dependency-name: "typescript"
+        update-types: ["version-update:semver-major"]
 
   - package-ecosystem: github-actions
     directory: /
