@@ -143,3 +143,30 @@ jobs:
       - name: Container logs
         if: always()
         run: docker logs web || true
+
+  # Merges Dependabot's grouped minor/patch npm update, but only after every job above has
+  # passed. Major updates and GitHub Actions updates are never merged here.
+  dependabot-automerge:
+    name: Auto-merge Dependabot minor/patch updates
+    needs: [quality, e2e, static-export, docker]
+    if: >-
+      github.event_name == 'pull_request' &&
+      github.actor == 'dependabot[bot]' &&
+      github.event.pull_request.user.login == 'dependabot[bot]' &&
+      startsWith(github.head_ref, 'dependabot/npm_and_yarn/npm-minor-patch-')
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    permissions:
+      contents: write
+      pull-requests: write
+      actions: write
+    env:
+      GH_TOKEN: ${{ github.token }}
+    steps:
+      - name: Squash-merge the pull request
+        run: gh pr merge "${{ github.event.pull_request.html_url }}" --squash --delete-branch
+
+      # Pushes made with GITHUB_TOKEN do not start other workflows, so start the Pages
+      # deployment by hand, as a normal push to main would.
+      - name: Deploy to GitHub Pages
+        run: gh workflow run deploy-pages.yml --repo "$GITHUB_REPOSITORY" --ref main

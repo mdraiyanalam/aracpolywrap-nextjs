@@ -4,3 +4,9 @@
 # Business content (copy, contact details, product data) needs product-owner review.
 /src/content/         @mdraiyanalam
 /docs/agile/          @mdraiyanalam
+
+# Dependabot's npm updates only touch these two files. A pattern with no owner removes the
+# code owner for them, so routine dependency PRs no longer ask for a review (and send an
+# email) every time. CI still has to pass before anything merges.
+/package.json
+/package-lock.json
